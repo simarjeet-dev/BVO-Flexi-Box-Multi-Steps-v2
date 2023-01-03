@@ -1,0 +1,47 @@
+{
+  "sections": {
+    "d08f954d-877e-48e4-8019-64f3b4e9cef6": {
+      "type": "home-image-banner",
+      "settings": {
+        "full_width": false,
+        "image": "shopify:\/\/shop_images\/Desktop-Category-Banner_-1200-x-235.jpg",
+        "mobile_image": "shopify:\/\/shop_images\/Mobile_Category_1_03d19867-23be-46cf-a7c0-7b78002493d0.jpg",
+        "banner_link": ""
+      }
+    },
+    "flexi-box-multi-steps": {
+      "type": "flexi-box-multi-steps-product-v2",
+      "blocks": {
+        "4439e232-fa35-4746-8682-8b4c524d8ba4": {
+          "type": "block",
+          "settings": {
+            "collection_title": "Any 1 Perfume",
+            "selected_collection": "slk-p",
+            "colleciton_product_limit": 15,
+            "user_selection": 1
+          }
+        },
+        "1c992c73-16d6-45f9-bafa-29a32a9c0fe5": {
+          "type": "block",
+          "settings": {
+            "collection_title": "Any 5 Skincare Products",
+            "selected_collection": "slk-50",
+            "colleciton_product_limit": 50,
+            "user_selection": 5
+          }
+        }
+      },
+      "block_order": [
+        "4439e232-fa35-4746-8682-8b4c524d8ba4",
+        "1c992c73-16d6-45f9-bafa-29a32a9c0fe5"
+      ],
+      "settings": {
+        "title": "My Self Love Kit"
+      }
+    }
+  },
+  "order": [
+    "d08f954d-877e-48e4-8019-64f3b4e9cef6",
+    "flexi-box-multi-steps"
+  ]
+}

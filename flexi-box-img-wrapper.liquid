@@ -1,0 +1,44 @@
+{%- if product.featured_media -%}
+<div class="image">
+  {% unless grid_image_width %}
+  {%- assign grid_image_width = '600x600' -%}
+{% endunless %}
+<div class="grid-view-item{% unless product.available %} product-price--sold-out grid-view-item--sold-out{% endunless %}">
+  <a class="grid-view-item__link {% if product.images.size > 1 %} has-secondary{% endif %}" href="javascript:void()">
+    <img class="grid-view-item__image" src="{{ product.featured_image.src | img_url: grid_image_width }}" alt="{{ product.featured_image.alt }}">
+    {% if product.images.size > 1 %}
+     <img class="secondary" src="{{ product.images[1] | img_url: grid_image_width }}" alt="{{ product.images[1].alt | escape }}">
+    {% endif %}
+  </a>
+</div>
+
+</div>
+{%- endif -%}
+
+<style>
+.has-secondary.grid-view-item__link img.secondary{
+ display:none;
+}
+.has-secondary.grid-view-item__link:hover img.secondary{
+ display:block;
+}
+.has-secondary.grid-view-item__link:hover img.grid-view-item__image{
+ display:none;
+}
+@media screen and (min-width:767px){
+.has-secondary.grid-view-item__link img.secondary{
+ display:none;
+}
+.has-secondary.grid-view-item__link:hover img.secondary{
+ display:block;
+}
+.has-secondary.grid-view-item__link:hover img.grid-view-item__image{
+ display:none;
+}
+}
+@media screen and (max-width:767px){
+.has-secondary.grid-view-item__link img.secondary{
+ display:none;
+}
+}
+</style>

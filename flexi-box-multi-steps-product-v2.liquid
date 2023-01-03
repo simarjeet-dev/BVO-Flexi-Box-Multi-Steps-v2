@@ -1,0 +1,231 @@
+{% comment %}Flexi Box Multi Steps Functionality{% endcomment %}
+{{ "flexi-box-multi-steps.css" | asset_url | stylesheet_tag }}
+<script src="https://kit.fontawesome.com/97c6b460d9.js" crossorigin="anonymous"></script>
+
+<div>
+    <form
+    method="post"
+    action="/cart/add"
+    id="flexi-box-form">
+    {% comment %}<h3 class="center">{{ section.settings.title }}</h3>{% endcomment %}
+    <div class="tab-menu sticky-header center">
+      <ul class="tab-items">
+        {% assign block_count = section.blocks | size %}
+        {% for block in section.blocks %}
+          <li class="tab-item">
+            <a
+              href="javascript:void()"
+              class="tab{% if forloop.first %} active-tab{% endif %}"
+              data-id="tab{{ forloop.index }}">
+              <div class="sticky-header-bubble">
+                <h5>{% if block_count > 1 %}STEP {{ forloop.index }}{% else %}{{ section.settings.title }}{% endif %}</h5>
+                <span id="checkbox_count_tab_{{ forloop.index }}_product" style="display:none;"></span>
+                <p>{{ block.settings.collection_title }}</p>
+              </div>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <!--end of tab-menu-->
+    <script>
+      let totalproductSelection = 0;
+    </script>
+    <hr class="hr-divider" style="margin:0 0 10px;">  
+    <!-- Custom search bar code -->
+    <div class="search center">
+      <input
+        id="searchbar"
+        type="text"
+        class="search-field"
+        name="search"
+        placeholder="Search..."
+        onkeypress="return event.keyCode != 13;">
+      <span class="search-clear"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <!-- Custom search bar code Ends-->
+    {% for block in section.blocks %}
+      {% assign tabIndex = forloop.index %}
+      <script>
+        totalproductSelection = totalproductSelection + Number({{- block.settings.user_selection -}});
+      </script>
+
+      <div
+        class="tab-content{% if forloop.first %} active-tab-content{% endif %}"
+        data-product-limit="{{- block.settings.user_selection -}}"
+        data-id="tab{{ forloop.index }}">
+        <!-- <div class="collection_info center">
+          <h3>{{ block.settings.collection_title }}</h3>
+          <p>You can select only {{ block.settings.user_selection }} {{ block.settings.user_selection | pluralize: ' item', ' items' -}}</p>
+        </div> -->
+
+        <ul id="collection-list">
+          <div class="row collection page-width">
+            {% assign productLimit = block.settings.colleciton_product_limit %}
+            {% for product in collections[block.settings.selected_collection].products limit: productLimit %}
+              {% assign productIndex = forloop.index %}
+              <li id="{{ product.id }}" class="collection-item{% unless product.available %} sold-out{% endunless %}">
+                <div class="one-fourth-column">
+                  <div class="product-info">
+                    <span class="product_counter _hidden">1</span>
+                    <svg
+                      class="added_to_cart _hidden"
+                      clip-rule="evenodd"
+                      fill-rule="evenodd"
+                      stroke-linejoin="round"
+                      stroke-miterlimit="2"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"><path d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm-5.049 10.386 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z" fill-rule="nonzero" /></svg>
+                    {% render 'flexi-box-img-wrapper', product: product %}
+                    <div class="product_grid_items">
+                      <h3 class="card-information__text h5">
+                        <a href="javascript:void()" class="full-unstyled-link">
+                          {{ product.title }}
+                        </a>
+                        {% if product.metafields.my_fields.product_meta_secondary_text != blank %}
+                          <span>{{ product.metafields.my_fields.product_meta_secondary_text }}</span>
+                        {% endif %}
+                      </h3>
+                      <!-- Start Areviews Collection Rating Code -->
+                      <div class=' areviews_product_item areviews_stars{{ product.id }} areviews_title_rating_average{{ product.id }}' data-product-id='{{ product.id }}'></div>
+                      <!-- End Areviews Collection Rating Code -->
+                    </div>
+                    {% capture property %} 
+                    {{ product.title }}{% unless product.has_only_default_variant %} - {{ product.selected_or_first_available_variant.title }}{% endunless %}
+                    SKU: {{ product.selected_or_first_available_variant.sku }}
+                    {% endcapture %}    
+                    <div id="checkboxes">
+                      <p class="line-item-property__field add-to-box">
+                        <label>
+                          <input
+                            type="hidden"
+                            autocomplete="off"
+                            name="properties[_ITEM{{ tabIndex }}]"
+                            value="No" />
+                          <input
+                            id="{{ product.handle }}"
+                            class="button"
+                            type="checkbox"
+                            data-id-products="tab_{{ tabIndex }}_product"
+                            data-id="tab_{{ tabIndex }}_product_{{ productIndex }}"
+                            autocomplete="off"
+                            name="properties[_ITEM{{ tabIndex }}]"
+                            value="{{ property }}" /><span></span>
+                        </label>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </div>
+        </ul>
+      </div>
+      <!-- End of tab -->
+    {% endfor %}
+
+    <select name="id" hidden="hidden">
+      {%- for variant in product.variants -%}
+        <option value="{{ variant.id }}">{{ variant.title }}</option>
+      {%- endfor -%}
+    </select>
+    {% assign featured_image = product.images.first | default: product.featured_image %}
+    <div class="sticky_cart">
+      <div class="product-details">
+        <div class="prd-details prd-details-left">
+          <div class="prd-image-title">
+            <img src="{{ featured_image | img_url: "300x" }}" />
+            <h3>{{ product.title | upcase }}</h3>
+          </div>
+        </div>
+        <div class="prd-details prd-details-right">
+          <div class="prd-image-price-cart">
+            <div class="prd-price">Total: {{ product.price | money | remove: '.00' }}/-</div>
+            <div class="cart-btn">
+              <button
+                type="submit"
+                id="submit-btn"
+                class="submit_button"
+                style="display: none;">ADD TO CART</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+<!--end of container-->
+
+<div class="Message_Bar is-hidden">
+  <div class="Message Message--green">
+    <div class="Message-icon">
+      <svg
+        clip-rule="evenodd"
+        fill-rule="evenodd"
+        stroke-linejoin="round"
+        stroke-miterlimit="2"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"><path d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm-5.049 10.386 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z" fill-rule="nonzero" /></svg>
+    </div>
+    <div class="Message-body">
+      <p>
+        <span></span>
+        added to box</p>
+    </div>
+  </div>
+</div>
+<script src="{{ 'flexi-box-multi-steps-v2.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+  {
+    "name": "Flexi Box Multi Steps",
+    "class": "flexi_box_multi_steps",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Header Title",
+        "id": "title"
+      }
+    ],
+    "max_blocks": 5,
+    "blocks": [
+      {
+        "name": "Flexi Box Collection",
+        "type": "block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "collection_title",
+            "label": "Collection title"
+          }, {
+            "type": "collection",
+            "id": "selected_collection",
+            "label": "Select collection"
+          }, {
+            "id": "colleciton_product_limit",
+            "type": "range",
+            "label": "Add Number of collection products",
+            "min": 2,
+            "max": 50,
+            "step": 1,
+            "default": 25
+          }, {
+            "id": "user_selection",
+            "type": "range",
+            "label": "Mandatory Product(s) to select",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 1
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Flexi Box Section"
+      }
+    ]
+  }
+{% endschema %}
