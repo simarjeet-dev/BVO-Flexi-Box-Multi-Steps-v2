@@ -9,33 +9,37 @@ Follow the followings steps into your Dawn theme code:
 
 2. Create a new section file `flexi-box-multi-steps-product.liquid` in the sections directory.
 
-3. Paste the code from the `flexi-box-multi-steps-product.liquid` file.
+3. Paste the code from the `flexi-box-multi-steps-product-v2.liquid` file.
 
-4. Create a new product template in JSON format `product.flexi-box-multi-steps-product.json` in the templates directory.
+4. Create a new product template in JSON format `product.flexi-box-multi-steps-v2.json` in the templates directory.
   
       <img width="500" src="https://cdn.shopify.com/s/files/1/0561/9256/5292/files/Picture1_5c7434b9-fbfe-40a0-add7-1782760e9026.png?v=1650882666">
 
-5. Paste the code from the `product.flexi-box-multi-steps-product.json` file.
+5. Paste the code from the `product.flexi-box-multi-steps-v2.json` file.
 
-6. Create a new product for the Flexi Box item with title and price (eg. Ultimate Perfume Box/Rs. 999/-) and choose the template `flexi-box-multi-steps-product`.
+6. Create a new product for the Flexi Box item with title and price (eg. Self Love Kit/Rs. 999/-) and choose the template `flexi-box-multi-steps-v2`.
 
-7. Create new manual/smart collections for Flexi Box categories with a title (eg. Men’s Perfume, Women’s Perfume, Unisex Perfumes).
+7. Create new manual/smart collections for Flexi Box categories with a title (eg. All 100ml Perfumes, All Skincare Products etc).
 
 8. Create a new asset file `flexi-box-multi-steps.css` in the assets directory.
 
 9. Paste the code from the `flexi-box-multi-steps.css` file.
   
-10. Create a new asset file `flexi-box-multi-steps.js` in the assets directory.
+10. Create a new asset file `flexi-box-multi-steps-v2.js` in the assets directory.
 
-11. Paste the code from the `flexi-box-multi-steps.js` file.
+11. Paste the code from the `flexi-box-multi-steps-v2.js` file.
 
 12. Create a new liquid snippet file `flexi-box-img-wrapper.liquid` in the snippets directory.
 
 13. Paste the code from the `flexi-box-img-wrapper.liquid` file.
 
-14. Open Customize editor and go to the Flexi box item and open `Flexi Box Multi Steps` section. Choose your Flexi Box collections.
+14. Open Customize editor and go to the Flexi box item and add blocks for Flexi Box collections.
   
-      <img width="300" src="https://cdn.shopify.com/s/files/1/0561/9256/5292/files/Picture2_6fb50509-f893-41cc-a2b2-af63a35608b7.png?v=1650882666">
+      <img width="300" src="https://cdn.shopify.com/s/files/1/0054/6665/2718/files/Screenshot_2023-01-03_123937.png">
+      
+15. Open Flexi Box collection block and select collection, max products to collection, max products to select.
+
+      <img width="300" src="https://cdn.shopify.com/s/files/1/0054/6665/2718/files/Screenshot_2023-01-03_124016.png">
 
 >**Note:** Follow the following steps if you need to hide the Flexi box item from the collection pages and the search page results.
 
