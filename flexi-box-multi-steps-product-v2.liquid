@@ -110,7 +110,9 @@
                             data-id="tab_{{ tabIndex }}_product_{{ productIndex }}"
                             autocomplete="off"
                             name="properties[_ITEM{{ tabIndex }}]"
-                            value="{{ property }}" /><span></span>
+                            value="{{ property }}"
+                            disabled
+                            /><span></span>
                         </label>
                       </p>
                     </div>
@@ -146,7 +148,19 @@
                 type="submit"
                 id="submit-btn"
                 class="submit_button"
-                style="display: none;">ADD TO CART</button>
+                style="display: none;"
+                {%- if product.selected_or_first_available_variant.available == false %}
+                  disabled="disabled"
+                {% endif -%}
+                >
+                {%- liquid
+                  if product.selected_or_first_available_variant.available
+                    echo 'products.product.add_to_cart' | t
+                  else
+                    echo 'products.product.sold_out' | t
+                  endif
+                -%}
+                </button>
             </div>
           </div>
         </div>
