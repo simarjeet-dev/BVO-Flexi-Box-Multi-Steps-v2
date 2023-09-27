@@ -1,5 +1,13 @@
 $(document).ready(function () {
-  // Show/Hide header tabs
+  //enable checkboxes after page load
+  $("input[type='checkbox']").prop("disabled", false);
+
+  //Scroll to top on page load
+  $(window).on('beforeunload', function(){
+    $(window).scrollTop(0);
+  });
+
+  //Show/Hide header tabs
   $(".tab").click(function () {
     $(".tab-content").removeClass("active-tab-content");
     $(".tab-content[data-id='" + $(this).attr("data-id") + "']").addClass(
@@ -9,16 +17,10 @@ $(document).ready(function () {
     $(this).parent().find(".tab").addClass("active-tab");
     $("#searchbar").val("").trigger("keyup"); //clear search
     //scroll up to top on switching tabs
-    $('html, body').animate({
-      scrollTop: 0
-    }, {
-      duration: 1000,
-      easing: 'swing'
-    });
-    //scroll up to top on switching tabs ends here
+    $("html, body").animate({ scrollTop: 0 }, 500, "swing");
   });
 
-  // Sticky header on-scroll
+  //Sticky header on-scroll
   $(window).scroll(function (event) {
     var height = $(window).height();
     var scroll = $(window).scrollTop();
@@ -29,7 +31,7 @@ $(document).ready(function () {
     }
   });
 
-  // Passing line-items on clicking submit button
+  //Passing line-items on clicking submit button
   $("#submit-btn").click(function () {
     let items = 1;
     $("#flexi-box-form")
@@ -97,34 +99,28 @@ $(document).ready(function () {
     }
 
     //Show/Hide bubble counts and tick on completing selection limit
-    if(n == selectionLimit) {
+    if (n == selectionLimit) {
       $("#checkbox_count_" + currProductDataId).css("display", "inline-block");
-      $("#checkbox_count_" + currProductDataId).html(`<i class="fa-solid fa-check"></i>`);
-    }
-    else if (n > 0) {
+      $("#checkbox_count_" + currProductDataId).html(
+        `<i class="fa-solid fa-check"></i>`
+      );
+    } else if (n > 0) {
       $("#checkbox_count_" + currProductDataId).css("display", "inline-block");
       $("#checkbox_count_" + currProductDataId).html(n);
-    }
-    else {
+    } else {
       $("#checkbox_count_" + currProductDataId).css("display", "none");
     }
 
-    // Switching tabs after adding mandatory items
+    //Switching tabs after adding mandatory items
     if (action == true) {
       let nextTab = `tab${currTabId + 1}`;
       $(`.tab[data-id='${nextTab}'`).click();
       $("#searchbar").val("").trigger("keyup"); //clear search
       //scroll up to top on switching tabs
-      $('html, body').animate({
-        scrollTop: 0
-      }, {
-        duration: 1000,
-        easing: 'swing'
-      });
-      //scroll up to top on switching tabs ends here
+      $("html, body").animate({ scrollTop: 0 }, 500, "swing");
     }
 
-    // Enabling submit btn if all mandatory products are selected
+    //Enabling submit btn if all mandatory products are selected
     if (
       $("#flexi-box-form input[type=checkbox]:checked").length ==
       totalproductSelection
@@ -135,25 +131,27 @@ $(document).ready(function () {
     }
   });
 
-  // Disable inspect element Right click and F12 key
-  $(document).bind("contextmenu",function(e) {
-   e.preventDefault();
+  //Disable inspect element Right click and F12 key
+  $(document).bind("contextmenu", function (e) {
+    e.preventDefault();
   });
-  $(document).keydown(function(e){
-      if(e.which === 123){
-         return false;
-      }
+  $(document).keydown(function (e) {
+    if (e.which === 123) {
+      return false;
+    }
   });
 
-  // JS code for custom search bar
+  //JS code for custom search bar
   $("#searchbar").on("keyup", function () {
     var value = $(this).val().toLowerCase();
     $("#collection-list li").filter(function () {
-      $(this).toggle($(this).find("a").text().toLowerCase().indexOf(value) > -1);
+      $(this).toggle(
+        $(this).find("a").text().toLowerCase().indexOf(value) > -1
+      );
     });
   });
-  // Clear search on pressing clear button
-  $('.search-clear').click(function(e){
+  //Clear search on pressing clear button
+  $(".search-clear").click(function (e) {
     $("#searchbar").val("").trigger("keyup");
   });
 }); //document.ready ends here
