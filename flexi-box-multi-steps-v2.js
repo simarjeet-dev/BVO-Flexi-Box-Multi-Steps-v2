@@ -114,7 +114,7 @@ $(document).ready(function () {
     //Switching tabs after adding mandatory items
     if (action == true) {
       let nextTab = `tab${currTabId + 1}`;
-      $(`.tab[data-id='${nextTab}'`).click();
+      $(`.tab[data-id='${nextTab}']`).click();
       $("#searchbar").val("").trigger("keyup"); //clear search
       //scroll up to top on switching tabs
       $("html, body").animate({ scrollTop: 0 }, 500, "swing");
