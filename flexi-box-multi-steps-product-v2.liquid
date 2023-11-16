@@ -131,12 +131,12 @@
         <option value="{{ variant.id }}">{{ variant.title }}</option>
       {%- endfor -%}
     </select>
-    {% assign featured_image = product.images.first | default: product.featured_image %}
+    
     <div class="sticky_cart">
       <div class="product-details">
         <div class="prd-details prd-details-left">
           <div class="prd-image-title">
-            <img src="{{ featured_image | img_url: "300x" }}" />
+            <img src="{{ product.featured_image | img_url: "300x" }}" />
             <h3>{{ product.title | upcase }}</h3>
           </div>
         </div>
