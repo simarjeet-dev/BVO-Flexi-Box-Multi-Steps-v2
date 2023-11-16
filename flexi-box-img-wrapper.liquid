@@ -1,13 +1,12 @@
 {%- if product.featured_media -%}
 <div class="image">
-  {% unless grid_image_width %}
-  {%- assign grid_image_width = '600x600' -%}
-{% endunless %}
-<div class="grid-view-item{% unless product.available %} product-price--sold-out grid-view-item--sold-out{% endunless %}">
+  {%- assign widths = '375, 500, 600' -%}
+  {%- capture sizes -%}100vw{%- endcapture -%}
+  <div class="grid-view-item{% unless product.available %} product-price--sold-out grid-view-item--sold-out{% endunless %}">
   <a class="grid-view-item__link {% if product.images.size > 1 %} has-secondary{% endif %}" href="javascript:void()">
-    <img class="grid-view-item__image" src="{{ product.featured_image.src | img_url: grid_image_width }}" alt="{{ product.featured_image.alt }}">
+    {{ product.featured_image.src | image_url: width: 500 | image_tag: loading: 'lazy', fetchpriority: 'low', sizes: sizes, widths: widths, content-visibility: 'auto', class: 'grid-view-item__image' }}
     {% if product.images.size > 1 %}
-     <img class="secondary" src="{{ product.images[1] | img_url: grid_image_width }}" alt="{{ product.images[1].alt | escape }}">
+     {{ product.images[1] | image_url: width: 500 | image_tag: loading: 'lazy', fetchpriority: 'low', sizes: sizes, widths: widths, content-visibility: 'auto', class: 'secondary' }} 
     {% endif %}
   </a>
 </div>
